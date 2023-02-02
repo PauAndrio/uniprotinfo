@@ -10,7 +10,7 @@ from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.exceptions import NotFound
 
 app = Flask(__name__)
-app.config.from_object(config['development'])
+app.config.from_object(config['producction'])
 db.init_app(app)
 
 login_manager = LoginManager()

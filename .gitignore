@@ -117,3 +117,6 @@ traj_comp.xtc
 
 # Visual Studio Code
 .vscode
+
+# flask server
+instance

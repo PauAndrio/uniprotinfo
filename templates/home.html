@@ -26,28 +26,164 @@
         <div  class="text-left text-color-uniprot">
             <h3 class="mb-5">Local installation</h3>
 
-            <p>Download and install Miniconda</p>
+            <p>Download and install Miniconda [MACOSX]</p>
             <div class="bg-light border mb-5 text-dark">
 <pre><code>[SHELL]
 
         wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/miniconda.sh
-        bash ~/miniconda.sh -b -p $HOME/miniconda</code></pre>    
+        bash ~/miniconda.sh -b -p $HOME/miniconda
+        ~/miniconda/bin/conda init bash
+        ~/miniconda/bin/conda init zsh</code></pre>    
+            </div>
+
+            <p>Download and install Miniconda [LINUX]</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+        bash ~/miniconda.sh -b -p $HOME/miniconda
+        ~/miniconda/bin/conda init bash
+        ~/miniconda/bin/conda init zsh</code></pre>    
             </div>
 
             <p>Create an environment install depencies and activate it</p>
             <div class="bg-light border mb-5 text-dark">
 <pre><code>[SHELL]
 
-        conda create -n uniprotinfoenv -c conda-forge python==3.11.0 biopython email-validator flask flask-bcrypt flask-login flask-sqlalchemy flask-wtf
+        conda create -n uniprotinfoenv -c conda-forge python==3.11.0 biopython email-validator flask flask-bcrypt flask-login flask-sqlalchemy flask-wtf git
         conda activate uniprotinfoenv</code></pre>    
             </div>
 
-            <p>Download and install Miniconda</p>
+            <p>Clone the repository and change directory</p>
             <div class="bg-light border mb-5 text-dark">
 <pre><code>[SHELL]
 
-        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/miniconda.sh
-        bash ~/miniconda.sh -b -p $HOME/miniconda</code></pre>    
+        git clone git@github.com:PauAndrio/uniprotinfo.git
+        cd uniprotinfo</code></pre>    
+            </div>
+
+            <p>Create DB and launch the test server</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+
+        python -c "from app import db, app; app.app_context().push(); db.create_all();"
+        python app.py</code></pre>    
+            </div>
+
+            <p>Test the app</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[BROWSER]
+
+        http://localhost:5000/</code></pre>    
+            </div>
+
+            <h3 class="mb-5">Deploy to the production server</h3>
+
+            <p>First send an email to the server administrator (Josep Ll. Gelpí: gelpi@ub.edu) asking for <var>your_application_path</var> and a <var>PREFIX</var> for your application</p>
+
+            <p>SSH connection to the server</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+
+        ssh <var>your_user</var>@formacio.bq.ub.edu</code></pre>    
+            </div>
+
+            <p>Download and install Miniconda [LINUX]</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+        bash ~/miniconda.sh -b -p $HOME/miniconda
+        ~/miniconda/bin/conda init bash</code></pre>    
+            </div>
+
+            <p>Create an environment install depencies and activate it</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+
+        conda create -n uniprotinfoenv -c conda-forge python==3.11.0 biopython email-validator flask flask-bcrypt flask-login flask-sqlalchemy flask-wtf git uwsgi
+        conda activate uniprotinfoenv</code></pre>    
+            </div>
+
+            <p>Clone the repository and change directory</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+        cd <var>your_application_deploy_path</var>
+        git clone git@github.com:PauAndrio/uniprotinfo.git .</code></pre>    
+            </div>
+
+            <p>Create DB</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+
+        python -c "from app import db, app; app.app_context().push(); db.create_all();"</code></pre>    
+            </div>
+
+            <p>Edit config.py adding the <var>PREFIX</var> value</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[FILE: your_application_path/config.py]
+
+        class DevelopmentConfig():
+            DEBUG=True
+            SQLALCHEMY_TRACK_MODIFICATIONS = False
+            SQLALCHEMY_DATABASE_URI = 'sqlite:///uniprotinfo.db'
+            SECRET_KEY = 'abcabcabcabcabcabc'
+
+        class ProducctionConfig():
+            DEBUG=False
+            SQLALCHEMY_TRACK_MODIFICATIONS = False
+            SQLALCHEMY_DATABASE_URI = 'sqlite:///uniprotinfo.db'
+            SECRET_KEY = 'asldkfjcqwlekrjwoiqwn'
+
+        config = {
+            "development": DevelopmentConfig,
+            "producction": ProducctionConfig
+        }
+
+        PREFIX = "your_application_prefix"</code></pre>    
+            </div>
+
+            <p>Create the wsgi.py file</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[FILE: your_application_path/wsgi.py]
+
+        from app import hostedApp as app
+        
+        if __name__ == "__main__":
+            app.run()</code></pre>    
+            </div>
+
+            <p>Create the your_application.ini file</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[FILE: your_application_path/your_application.ini]
+
+        [uwsgi]
+        module = wsgi:app
+
+        master = true
+        processes = 1
+        
+        socket = your_application.sock
+        chmod-socket = 777
+        vacuum = true
+        
+        die-on-term = true
+        
+        logto = your_application_path/your_application.log</code></pre>    
+            </div>
+
+            <p>Launch the wsgi producction server</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+
+        uwsgi --daemonize your_application_path/your_application.ini</code></pre>    
+            </div>
+
+            <p>Test the app</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[BROWSER]
+
+        https://formacio.bq.ub.edu/your_application_prefix/</code></pre>    
             </div>
 
         </div>
