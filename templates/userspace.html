@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}{{ current_user.email }}'s private space{% endblock %}
+
+{% block body %}
+<div class="container">
+<div class="row col mb-5">Welcome {{ current_user.user_data[0].name }} {{ current_user.user_data[0].surname }}</div>
+
+<form action="{{ url_for('userspace') }}" method="post">
+    {{ form.hidden_tag() }}
+    <div class="row">
+        <div class="col-2">
+            {{ form.submit(class_="btn btn-primary") }}
+        </div>
+        <div class="col-3 mb-5">
+            {{ form.uniprot(class_="form-control") }}
+        </div>
+    </div>
+</form>
+
+
+<div class="row col">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Uniprot code</th>
+            <th scope="col">Sequence</th>
+            <th scope="col">Molecular Weight</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for seqanalysis in user_sequences %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                <td>{{ seqanalysis.uniprot }}</td>
+                {% if seqanalysis.sequence|length > 10 %}
+                    <td><a class="link-dark" href="{{ url_for('seqanalysis', seqanalysis_id=seqanalysis.id) }}">{{ seqanalysis.sequence[:10] }}...</a></td>
+                {% else %}
+                    <td>{{ seqanalysis.sequence }}</td>
+                {% endif %}
+                <td>{{ "%.4f"|format(seqanalysis.mol_weight) }} (g/mol)</td>
+                </a>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

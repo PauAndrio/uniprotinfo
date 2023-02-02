@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block body %}
+<div class="container-md d-grid gap-5">
+    <div class="row mb-5">
+        <div  class="text-center">
+            <img class="logo" src="{{ url_for('static', filename='img/Infobox_info_icon.svg') }}"/>
+            <img class="logo" src="{{ url_for('static', filename='img/uniprot-logo.img.svg') }}"/>
+        </div>
+        
+    </div>
+    <div class="row mb-5">
+        <div  class="text-center">
+            <a class="btn btn-primary btn-lg me-5" href="{{ url_for('login') }}" role="button">Login</a>
+            <a class="btn btn-primary btn-lg" href="{{ url_for('signup') }}" role="button">Sign up</a>
+        </div>
+    </div>
+    <div class="row">
+        <div  class="text-center">
+            <img class="logo-sm" src="{{ url_for('static', filename='img/github-mark.svg') }}"/>
+            <a class="link-primary mt-2" href="https://github.com/PauAndrio/uniprotinfo">https://github.com/PauAndrio/uniprotinfo</a>
+        </div>
+    </div>
+    <div class="row">
+        <div  class="text-left text-color-uniprot">
+            <h3 class="mb-5">Local installation</h3>
+
+            <p>Download and install Miniconda</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/miniconda.sh
+        bash ~/miniconda.sh -b -p $HOME/miniconda</code></pre>    
+            </div>
+
+            <p>Create an environment install depencies and activate it</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+
+        conda create -n uniprotinfoenv -c conda-forge python==3.11.0 biopython email-validator flask flask-bcrypt flask-login flask-sqlalchemy flask-wtf
+        conda activate uniprotinfoenv</code></pre>    
+            </div>
+
+            <p>Download and install Miniconda</p>
+            <div class="bg-light border mb-5 text-dark">
+<pre><code>[SHELL]
+
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/miniconda.sh
+        bash ~/miniconda.sh -b -p $HOME/miniconda</code></pre>    
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
