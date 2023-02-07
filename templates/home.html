@@ -104,7 +104,7 @@
         conda config --add channels bioconda
         conda config --add channels conda-forge
         conda config --set channel_priority strict
-        conda create -n uniprotinfoenv -c conda-forge biopython email-validator flask flask-bcrypt flask-login flask-sqlalchemy flask-wtf git uwsgi
+        conda create -n uniprotinfoenv -c conda-forge requests biopython email-validator flask flask-bcrypt flask-login flask-sqlalchemy flask-wtf git uwsgi
         conda activate uniprotinfoenv</code></pre>    
             </div>
 
@@ -112,7 +112,7 @@
             <div class="bg-light border mb-5 text-dark">
 <pre><code>[SHELL]
         cd <var>your_application_deploy_path</var>
-        git clone git@github.com:PauAndrio/uniprotinfo.git .</code></pre>    
+        git clone https://github.com/PauAndrio/uniprotinfo.git .</code></pre>    
             </div>
 
             <p>Create DB</p>
