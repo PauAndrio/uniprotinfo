@@ -101,7 +101,10 @@
             <div class="bg-light border mb-5 text-dark">
 <pre><code>[SHELL]
 
-        conda create -n uniprotinfoenv -c conda-forge python==3.11.0 biopython email-validator flask flask-bcrypt flask-login flask-sqlalchemy flask-wtf git uwsgi
+        conda config --add channels bioconda
+        conda config --add channels conda-forge
+        conda config --set channel_priority strict
+        conda create -n uniprotinfoenv -c conda-forge biopython email-validator flask flask-bcrypt flask-login flask-sqlalchemy flask-wtf git uwsgi
         conda activate uniprotinfoenv</code></pre>    
             </div>
 
