@@ -15,4 +15,4 @@ config = {
     "producction": ProducctionConfig
 }
 
-PREFIX = ""
+PREFIX = "uniprotinfo"

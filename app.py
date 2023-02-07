@@ -89,7 +89,7 @@ def seqanalysis(seqanalysis_id):
 
 
 hostedApp = Flask(__name__)
-hostedApp.config.from_object(config['development'])
+hostedApp.config.from_object(config['producction'])
 hostedApp.wsgi_app = DispatcherMiddleware(NotFound(), {f"{PREFIX}":app})
 
 
