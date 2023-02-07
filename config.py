@@ -17,4 +17,5 @@ config = {
     "producction": ProducctionConfig
 }
 
+# IMPORTANT PREFIX should start with an slash ("/") character
 PREFIX = "/uniprotinfo"
