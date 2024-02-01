@@ -1,15 +1,14 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-import requests
-
 
 db = SQLAlchemy()
 
 
 user_sequences = db.Table('user_sequences',
-    db.Column('seqanalysis_id', db.Integer, db.ForeignKey('seqanalysis.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
-)
+                          db.Column('seqanalysis_id', db.Integer, db.ForeignKey('seqanalysis.id')),
+                          db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+                          )
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True, unique=True)
@@ -17,6 +16,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(120), nullable=False)
     user_data = db.relationship('Userdata', backref='User')
     sequences = db.relationship('Seqanalysis', secondary=user_sequences, backref='users')
+
 
 class Userdata(db.Model):
     id = db.Column(db.Integer, primary_key=True, unique=True)
@@ -31,4 +31,3 @@ class Seqanalysis(db.Model):
     uniprot = db.Column(db.String(10), nullable=False)
     sequence = db.Column(db.String, nullable=False)
     mol_weight = db.Column(db.Float, nullable=False)
-        

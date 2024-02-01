@@ -2,129 +2,124 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-<div class="container-md d-grid gap-5">
-    <div class="row mb-5">
-        <div  class="text-center">
-            <img class="logo" src="{{ url_for('static', filename='img/Infobox_info_icon.svg') }}"/>
-            <img class="logo" src="{{ url_for('static', filename='img/uniprot-logo.img.svg') }}"/>
-        </div>
-        
+<div class="row mb-5">
+    <div class="text-center">
+        <a class="btn btn-primary btn-lg me-5" href="{{ url_for('login') }}" role="button">Login</a>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('signup') }}" role="button">Sign up</a>
     </div>
-    <div class="row mb-5">
-        <div  class="text-center">
-            <a class="btn btn-primary btn-lg me-5" href="{{ url_for('login') }}" role="button">Login</a>
-            <a class="btn btn-primary btn-lg" href="{{ url_for('signup') }}" role="button">Sign up</a>
-        </div>
+</div>
+<div class="row">
+    <div class="text-center">
+        <img class="logo-sm" src="{{ url_for('static', filename='img/github-mark.svg') }}" />
+        <a class="link-primary mt-2"
+            href="https://github.com/PauAndrio/uniprotinfo">https://github.com/PauAndrio/uniprotinfo</a>
     </div>
-    <div class="row">
-        <div  class="text-center">
-            <img class="logo-sm" src="{{ url_for('static', filename='img/github-mark.svg') }}"/>
-            <a class="link-primary mt-2" href="https://github.com/PauAndrio/uniprotinfo">https://github.com/PauAndrio/uniprotinfo</a>
-        </div>
-    </div>
-    <div class="row">
-        <div  class="text-left text-color-uniprot">
-            <h3 class="mb-5">Local installation</h3>
+</div>
+<div class="row">
+    <div class="text-left text-color-uniprot">
+        <h3 class="mb-5">Local installation</h3>
 
-            <p>Download and install Miniconda [MACOSX]</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
+        <p>Download and install Miniconda [MACOSX]</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
 
         wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/miniconda.sh
         bash ~/miniconda.sh -b -p $HOME/miniconda
         ~/miniconda/bin/conda init bash
-        ~/miniconda/bin/conda init zsh</code></pre>    
-            </div>
+        ~/miniconda/bin/conda init zsh</code></pre>
+        </div>
 
-            <p>Download and install Miniconda [LINUX]</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
+        <p>Download and install Miniconda [LINUX]</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
 
         wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
         bash ~/miniconda.sh -b -p $HOME/miniconda
         ~/miniconda/bin/conda init bash
-        ~/miniconda/bin/conda init zsh</code></pre>    
-            </div>
+        ~/miniconda/bin/conda init zsh</code></pre>
+        </div>
 
-            <p>Create an environment install depencies and activate it</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
+        <p>Create an environment install depencies and activate it</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
 
         conda create -n uniprotinfoenv -c conda-forge python==3.11.0 biopython email-validator flask flask-bcrypt flask-login flask-sqlalchemy flask-wtf git
-        conda activate uniprotinfoenv</code></pre>    
-            </div>
+        conda activate uniprotinfoenv</code></pre>
+        </div>
 
-            <p>Clone the repository and change directory</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
+        <p>Clone the repository and change directory</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
 
         git clone git@github.com:PauAndrio/uniprotinfo.git
-        cd uniprotinfo</code></pre>    
-            </div>
+        cd uniprotinfo</code></pre>
+        </div>
 
-            <p>Create DB and launch the test server</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
+        <p>Create DB and launch the test server</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
 
         python -c "from app import db, app; app.app_context().push(); db.create_all();"
-        python app.py</code></pre>    
-            </div>
+        python app.py</code></pre>
+        </div>
 
-            <p>Test the app</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[BROWSER]
+        <p>Test the app</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[BROWSER]
 
-        http://localhost:5000/</code></pre>    
-            </div>
+        http://localhost:5000/</code></pre>
+        </div>
 
-            <h3 class="mb-5">Deploy to the production server</h3>
+        <h3 class="mb-5">Deploy to the production server</h3>
 
-            <p>First send an email to the server administrator (Josep Ll. Gelpí: gelpi@ub.edu) asking for <var>your_application_path</var> and a <var>PREFIX</var> for your application</p>
+        <p>First send an email to the server administrator (Josep Ll. Gelpí: gelpi@ub.edu) asking for
+            <var>your_application_path</var> and a <var>PREFIX</var> for your application
+        </p>
 
-            <p>SSH connection to the server</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
+        <p>SSH connection to the server</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
 
-        ssh <var>your_user</var>@formacio.bq.ub.edu</code></pre>    
-            </div>
+        ssh <var>your_user</var>@formacio.bq.ub.edu</code></pre>
+        </div>
 
-            <p>Download and install Miniconda [LINUX]</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
+        <p>Download and install Miniconda [LINUX]</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
 
         wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
         bash ~/miniconda.sh -b -p $HOME/miniconda
-        ~/miniconda/bin/conda init bash</code></pre>    
-            </div>
+        ~/miniconda/bin/conda init bash</code></pre>
+        </div>
 
-            <p>Create an environment install depencies and activate it</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
+        <p>Create an environment install depencies and activate it</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
 
         conda config --add channels bioconda
         conda config --add channels conda-forge
         conda config --set channel_priority strict
         conda create -n uniprotinfoenv  requests biopython email-validator flask flask-bcrypt flask-login flask-sqlalchemy flask-wtf git uwsgi
-        conda activate uniprotinfoenv</code></pre>    
-            </div>
+        conda activate uniprotinfoenv</code></pre>
+        </div>
 
-            <p>Clone the repository and change directory</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
+        <p>Clone the repository and change directory</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
         cd <var>your_application_deploy_path</var>
-        git clone https://github.com/PauAndrio/uniprotinfo.git .</code></pre>    
-            </div>
+        git clone https://github.com/PauAndrio/uniprotinfo.git .</code></pre>
+        </div>
 
-            <p>Create DB</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
+        <p>Create DB</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
 
-        python -c "from app import db, app; app.app_context().push(); db.create_all();"</code></pre>    
-            </div>
+        python -c "from app import db, app; app.app_context().push(); db.create_all();"</code></pre>
+        </div>
 
-            <p>Edit config.py adding the <var>PREFIX</var> value</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[FILE: your_application_path/config.py]
+        <p>Edit config.py adding the <var>PREFIX</var> value</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[FILE: your_application_path/config.py]
 
         class DevelopmentConfig():
             DEBUG=True
@@ -143,53 +138,52 @@
             "producction": ProducctionConfig
         }
 
-        PREFIX = "your_application_prefix"</code></pre>    
-            </div>
+        PREFIX = "your_application_prefix"</code></pre>
+        </div>
 
-            <p>Create the wsgi.py file</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[FILE: your_application_path/wsgi.py]
+        <p>Create the wsgi.py file</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[FILE: your_application_path/wsgi.py]
 
         from app import hostedApp as app
-        
-        if __name__ == "__main__":
-            app.run()</code></pre>    
-            </div>
 
-            <p>Create the your_application.ini file</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[FILE: your_application_path/your_application.ini]
+        if __name__ == "__main__":
+            app.run()</code></pre>
+        </div>
+
+        <p>Create the your_application.ini file</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[FILE: your_application_path/your_application.ini]
 
         [uwsgi]
         module = wsgi:app
 
         master = true
         processes = 1
-        
+
         socket = your_application.sock
         chmod-socket = 777
         vacuum = true
-        
+
         die-on-term = true
-        
-        logto = your_application_path/your_application.log</code></pre>    
-            </div>
 
-            <p>Launch the wsgi producction server</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[SHELL]
-
-            uwsgi your_application_path/your_application.ini --daemonize2 uwsgi.log</code></pre>    
-            </div>
-
-            <p>Test the app</p>
-            <div class="bg-light border mb-5 text-dark">
-<pre><code>[BROWSER]
-
-        https://formacio.bq.ub.edu/your_application_prefix/</code></pre>    
-            </div>
-
+        logto = your_application_path/your_application.log</code></pre>
         </div>
+
+        <p>Launch the wsgi producction server</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[SHELL]
+
+            uwsgi your_application_path/your_application.ini --daemonize2 uwsgi.log</code></pre>
+        </div>
+
+        <p>Test the app</p>
+        <div class="bg-light border mb-5 text-dark">
+            <pre><code>[BROWSER]
+
+        https://formacio.bq.ub.edu/your_application_prefix/</code></pre>
+        </div>
+
     </div>
 </div>
 {% endblock %}
